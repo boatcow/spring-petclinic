@@ -17,8 +17,11 @@ pipeline {
 
     stage('run') {
       steps {
-        sh 'cp -r target/ /shared/target'
-        sh 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /shared/target/*.jar &'
+        sh '''
+        ansible --version
+        '''
+//         sh 'cp -r target/ /shared/target'
+//         sh 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /shared/target/*.jar &'
 
       }
     }
