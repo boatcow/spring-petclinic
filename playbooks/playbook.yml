@@ -2,28 +2,27 @@
   hosts: localhost
   become: true
   vars:
-    source_container: jenkins-container
-    source_jar_path: /shared/target/spring-petclinic-3.0.0-SNAPSHOT.jar
-    target_container: sonarqube-container
-    target_jar_path: /shared/target/spring-petclinic-3.0.0-SNAPSHOT.jar
+    source_container_name: "jenkins-container"
+    destination_container_name: "deployment-container"
+    source_file_path: "target/"
+    destination_file_path: "/shared/target/"
   tasks:
-    # Stop the target container
-    # - name: Stop target container
-    #   docker_container:
-    #     name: "{{ target_container }}"
-    #     state: stopped
+    - name: Get the ID of the source container
+      docker_container_info:
+        name: "{{ source_container_name }}"
+      register: source_container_info
 
-    # # Copy the JAR file from the source container to the target container
-    # - name: Copy JAR file from source container to target container
-    #   command: docker cp {{ source_container }}:{{ source_jar_path }} {{ target_container }}:{{ target_jar_path }}
+    - name: Get the ID of the destination container
+      docker_container_info:
+        name: "{{ destination_container_name }}"
+      register: destination_container_info
 
-    # # Start the target container
-    # - name: Start target container
-    #   docker_container:
-    #     name: "{{ target_container }}"
-    #     state: started
+    - name: Copy file from source container to destination container
+      copy:
+        src: "{{ source_container_info.container_id }}:{{ source_file_path }}"
+        dest: "{{ destination_container_info.container_id }}:{{ destination_file_path }}"
+      delegate_to: localhost
 
-#     Run the JAR file on the target container
     - name: Run JAR file on target container
       command: curl --location 'http://deployment-container:5001/execute' --form 'command="java -jar /shared/target/*.jar"'
       # args:
