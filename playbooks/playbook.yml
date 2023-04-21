@@ -4,8 +4,8 @@
   vars:
     source_container_name: "jenkins-container"
     destination_container_name: "deployment-container"
-    source_file_path: "target/"
-    destination_file_path: "/shared/target/"
+    source_file_path: "/shared/target/"
+    destination_file_path: "/shared/target2/"
   tasks:
     - name: Get the ID of the source container
       docker_container_info:
