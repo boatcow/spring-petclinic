@@ -1,0 +1,30 @@
+- name: Copy and run JAR file on another Docker container
+  hosts: sonarqube-container
+  become: true
+  vars:
+    source_container: jenkins-container
+    source_jar_path: /shared/target/spring-petclinic-3.0.0-SNAPSHOT.jar
+    # target_container: sonarqube-container
+    target_jar_path: /shared/target/spring-petclinic-3.0.0-SNAPSHOT.jar
+  tasks:
+    # Stop the target container
+    # - name: Stop target container
+    #   docker_container:
+    #     name: "{{ target_container }}"
+    #     state: stopped
+
+    # # Copy the JAR file from the source container to the target container
+    # - name: Copy JAR file from source container to target container
+    #   command: docker cp {{ source_container }}:{{ source_jar_path }} {{ target_container }}:{{ target_jar_path }}
+
+    # # Start the target container
+    # - name: Start target container
+    #   docker_container:
+    #     name: "{{ target_container }}"
+    #     state: started
+
+    # Run the JAR file on the target container
+    - name: Run JAR file on target container
+      command: java -jar /shared/target/spring-petclinic-3.0.0-SNAPSHOT.jar
+      # args:
+      #   chdir: "{{ target_jar_path | dirname }}"
