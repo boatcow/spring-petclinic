@@ -20,8 +20,10 @@ pipeline {
         sh '''
         ansible --version
         '''
-//         sh 'cp -r target/ /shared/target'
+        sh 'cp -r target/ /shared/target'
+        sh 'ansible-playbook playbooks/playbook.yml'
 //         sh 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /shared/target/*.jar &'
+        
 
       }
     }
