@@ -6,7 +6,7 @@
     source_jar_path: /shared/target/spring-petclinic-3.0.0-SNAPSHOT.jar
     target_container: sonarqube-container
     target_jar_path: /shared/target/spring-petclinic-3.0.0-SNAPSHOT.jar
-#   tasks:
+  tasks:
     # Stop the target container
     # - name: Stop target container
     #   docker_container:
@@ -23,8 +23,8 @@
     #     name: "{{ target_container }}"
     #     state: started
 
-    # Run the JAR file on the target container
-#     - name: Run JAR file on target container
-#       command: curl --location 'http://deployment-container:5001/execute' --form 'command="JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /shared/target/*.jar &"'
+    Run the JAR file on the target container
+    - name: Run JAR file on target container
+      command: curl --location 'http://deployment-container:5001/execute' --form 'command="JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /shared/target/*.jar &"'
       # args:
       #   chdir: "{{ target_jar_path | dirname }}"
