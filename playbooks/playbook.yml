@@ -17,7 +17,7 @@
     #     name: "{{ destination_container_name }}"
     #   register: destination_container_info
     - name: Copy file into existing container
-      command: cp -r /shared/target /shared/
+      command: cp -r /shared/target /shared/target2
 
     # - name: Copy file from source container to destination container
     #   copy:
@@ -26,6 +26,6 @@
     #   delegate_to: localhost
 
     - name: Run JAR file on target container
-      command: curl --location 'http://deployment-container:5001/execute' --form 'command="java -jar /shared/target/*.jar"'
+      command: curl --location 'http://deployment-container:5001/execute' --form 'command="java -jar /shared/target2/*.jar"'
       # args:
       #   chdir: "{{ target_jar_path | dirname }}"
