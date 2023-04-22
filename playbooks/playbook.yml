@@ -4,28 +4,10 @@
   vars:
     source_container_name: "jenkins-container"
     destination_container_name: "deployment-container"
-    source_file_path: "/shared/target/"
-    destination_file_path: "/shared/target2/"
+    source_file_path: "/created_files"
+    destination_file_path: "/shared/target"
   tasks:
-    # - name: Get the ID of the source container
-    #   docker_container_info:
-    #     name: "{{ source_container_name }}"
-    #   register: source_container_info
-
-    # - name: Get the ID of the destination container
-    #   docker_container_info:
-    #     name: "{{ destination_container_name }}"
-    #   register: destination_container_info
     - name: Copy file into existing container
       command: cp -r /created_files /shared/target
-
-    # - name: Copy file from source container to destination container
-    #   copy:
-    #     src: "{{ source_container_info.container_id }}:{{ source_file_path }}"
-    #     dest: "{{ destination_container_info.container_id }}:{{ destination_file_path }}"
-    #   delegate_to: localhost
-
     - name: Run JAR file on target container
       command: curl --location 'http://deployment-container:5001/execute' --form 'command="java -jar /shared/target/*.jar"'
-      # args:
-      #   chdir: "{{ target_jar_path | dirname }}"
